@@ -1,17 +1,13 @@
 'use strict';
 
-var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var OBJ_QUANTITY = 8;
+var ADS_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var ADS_QUANTITY = 8;
 var mapElem = document.querySelector('.map');
+var mapPinsElem = document.querySelector('.map__pins');
+var mapHeight = mapElem.clientHeight;
 
-var getRandomElement = function (arr) {
-  var index = Math.floor(Math.random() * arr.length);
-
-  return arr[index];
-};
-
-var getRandomNum = function (startIndex, endIndex) {
-  return Math.round(Math.random() * (endIndex - startIndex) + startIndex);
+var getRandomNum = function (min, max) {
+  return Math.round(Math.random() * (max - min) + min);
 };
 
 var generateObj = function (index) {
@@ -20,10 +16,10 @@ var generateObj = function (index) {
       'avatar': 'img/avatars/user0' + index + '.png',
     },
     'offer': {
-      'type': '' + getRandomElement(HOUSE_TYPES),
+      'type': '' + ADS_TYPES[getRandomNum(0, ADS_TYPES.length)],
     },
     'location': {
-      'x': getRandomNum(10, 700),
+      'x': getRandomNum(0, mapHeight),
       'y': getRandomNum(130, 630)
     }
   };
@@ -41,16 +37,16 @@ var generateMock = function (quantity) {
   return mock;
 };
 
-var mock = generateMock(OBJ_QUANTITY);
+var mock = generateMock(ADS_QUANTITY);
 mapElem.classList.remove('map--faded');
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var pinContainerElem = document.querySelector('.map__pins');
 
 var renderPin = function (pin) {
   var pinElem = pinTemplate.cloneNode(true);
 
-  pinElem.style = 'left: ' + pin.location.x + 'px; ' + 'top: ' + pin.location.y + 'px';
+  pinElem.style.left = pin.location.x - pinElem.clientWidth + 'px';
+  pinElem.style.top = pin.location.y - pinElem.clientHeight + 'px';
   pinElem.querySelector('img').src = pin.author.avatar;
   pinElem.querySelector('img').alt = pin.offer.type;
 
@@ -61,4 +57,4 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < mock.length; i++) {
   fragment.appendChild(renderPin(mock[i]));
 }
-pinContainerElem.appendChild(fragment);
+mapPinsElem.appendChild(fragment);
