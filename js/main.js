@@ -5,3 +5,7 @@ var getRandomElement = function (arr) {
 
   return arr[index];
 };
+
+var getRandomNum = function (startIndex, endIndex) {
+  return Math.round(Math.random() * (endIndex - startIndex) + startIndex;
+};
