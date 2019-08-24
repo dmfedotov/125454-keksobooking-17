@@ -12,15 +12,15 @@ var getRandomNum = function (min, max) {
 
 var generateObj = function (index) {
   var obj = {
-    'author': {
-      'avatar': 'img/avatars/user0' + index + '.png',
+    author: {
+      avatar: 'img/avatars/user0' + index + '.png',
     },
-    'offer': {
-      'type': '' + ADS_TYPES[getRandomNum(0, ADS_TYPES.length)],
+    offer: {
+      type: '' + ADS_TYPES[getRandomNum(0, ADS_TYPES.length)],
     },
-    'location': {
-      'x': getRandomNum(0, mapHeight),
-      'y': getRandomNum(130, 630)
+    location: {
+      x: getRandomNum(0, mapHeight),
+      y: getRandomNum(130, 630)
     }
   };
 
