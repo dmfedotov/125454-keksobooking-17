@@ -2,13 +2,12 @@
 
 var ADS_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var ADS_QUANTITY = 8;
-var mapElem = document.querySelector('.map');
+var map = document.querySelector('.map');
 // var mapPinsElem = document.querySelector('.map__pins');
-var filters = mapElem.querySelector('.map__filters');
-var filtersElems = filters.children;
+var filtersForm = map.querySelector('.map__filters');
 var adsForm = document.querySelector('.ad-form');
-var adsFormElems = adsForm.children;
-var mapHeight = mapElem.clientHeight;
+var mapPin = map.querySelector('.map__pin--main');
+var mapHeight = map.clientHeight;
 
 var getRandomNum = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -42,7 +41,6 @@ var generateMock = function (quantity) {
 };
 
 var mock = generateMock(ADS_QUANTITY);
-// mapElem.classList.remove('map--faded');
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -63,12 +61,24 @@ for (var i = 0; i < mock.length; i++) {
 }
 // mapPinsElem.appendChild(fragment);
 
-var disableFormElems = function (elements) {
-  for (var j = 0; j < elements.length; j++) {
-    var element = elements[j];
-    element.disabled = true;
+var changeFormState = function (form, state) {
+  var formElems = form.children;
+
+  for (var j = 0; j < formElems.length; j++) {
+    var element = formElems[j];
+    element.disabled = state;
   }
 };
 
-disableFormElems(filtersElems);
-disableFormElems(adsFormElems);
+changeFormState(filtersForm, true);
+changeFormState(adsForm, true);
+
+var changePageState = function () {
+  map.classList.remove('map--faded');
+  adsForm.classList.remove('ad-form--disabled');
+
+  changeFormState(filtersForm, false);
+  changeFormState(adsForm, false);
+};
+
+mapPin.addEventListener('click', changePageState);
