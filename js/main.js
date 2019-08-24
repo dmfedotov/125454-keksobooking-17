@@ -3,7 +3,11 @@
 var ADS_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var ADS_QUANTITY = 8;
 var mapElem = document.querySelector('.map');
-var mapPinsElem = document.querySelector('.map__pins');
+// var mapPinsElem = document.querySelector('.map__pins');
+var filters = mapElem.querySelector('.map__filters');
+var filtersElems = filters.children;
+var adsForm = document.querySelector('.ad-form');
+var adsFormElems = adsForm.children;
 var mapHeight = mapElem.clientHeight;
 
 var getRandomNum = function (min, max) {
@@ -38,7 +42,7 @@ var generateMock = function (quantity) {
 };
 
 var mock = generateMock(ADS_QUANTITY);
-mapElem.classList.remove('map--faded');
+// mapElem.classList.remove('map--faded');
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -57,4 +61,14 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < mock.length; i++) {
   fragment.appendChild(renderPin(mock[i]));
 }
-mapPinsElem.appendChild(fragment);
+// mapPinsElem.appendChild(fragment);
+
+var disableFormElems = function (elements) {
+  for (var j = 0; j < elements.length; j++) {
+    var element = elements[j];
+    element.disabled = true;
+  }
+};
+
+disableFormElems(filtersElems);
+disableFormElems(adsFormElems);
