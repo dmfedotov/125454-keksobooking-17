@@ -2,12 +2,13 @@
 
 var ADS_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var ADS_QUANTITY = 8;
+var PIN_COORD_MIN = 130;
+var PIN_COORD_MAX = 630;
 var map = document.querySelector('.map');
-// var mapPinsElem = document.querySelector('.map__pins');
-var filtersForm = map.querySelector('.map__filters');
-var adsForm = document.querySelector('.ad-form');
 var mapPin = map.querySelector('.map__pin--main');
 var mapHeight = map.clientHeight;
+var filtersForm = map.querySelector('.map__filters');
+var adsForm = document.querySelector('.ad-form');
 
 var getRandomNum = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -23,7 +24,7 @@ var generateObj = function (index) {
     },
     location: {
       x: getRandomNum(0, mapHeight),
-      y: getRandomNum(130, 630)
+      y: getRandomNum(PIN_COORD_MIN, PIN_COORD_MAX)
     }
   };
 
@@ -59,7 +60,6 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < mock.length; i++) {
   fragment.appendChild(renderPin(mock[i]));
 }
-// mapPinsElem.appendChild(fragment);
 
 var changeFormState = function (form, state) {
   var formElems = form.children;
@@ -81,4 +81,18 @@ var changePageState = function () {
   changeFormState(adsForm, false);
 };
 
-mapPin.addEventListener('click', changePageState);
+var fillAddressField = function (pin) {
+  var addressField = adsForm.querySelector('#address');
+  var coordX = Math.round(parseInt(pin.style.left, 10));
+  var coordY = Math.round(parseInt(pin.style.top, 10));
+
+  addressField.value = coordX + ', ' + coordY;
+};
+
+fillAddressField(mapPin);
+
+mapPin.addEventListener('mouseup', function () {
+  changePageState();
+  fillAddressField(mapPin);
+  map.appendChild(fragment);
+});
