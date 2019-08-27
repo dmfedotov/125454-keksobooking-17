@@ -12,6 +12,7 @@ var adsForm = document.querySelector('.ad-form');
 var typeOfHouse = adsForm.querySelector('#type');
 var timeIn = adsForm.querySelector('#timein');
 var timeOut = adsForm.querySelector('#timeout');
+var adsPriceField = adsForm.querySelector('#price');
 
 var getRandomNum = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -105,7 +106,6 @@ mapPin.addEventListener('mouseup', function () {
 });
 
 var onTypeOfHouseClick = function () {
-  var price = adsForm.querySelector('#price');
   var priceValue = '';
 
   switch (typeOfHouse.value) {
@@ -123,8 +123,8 @@ var onTypeOfHouseClick = function () {
       break;
   }
 
-  price.setAttribute('min', priceValue);
-  price.placeholder = priceValue;
+  adsPriceField.setAttribute('min', priceValue);
+  adsPriceField.placeholder = priceValue;
 };
 
 onTypeOfHouseClick();
@@ -142,3 +142,16 @@ timeIn.addEventListener('change', function (evt) {
 timeOut.addEventListener('change', function (evt) {
   onTimeClick(evt, timeIn);
 });
+
+var highlightInvalidField = function (evt) {
+  var field = evt.target;
+
+  if (!field.validity.valid) {
+    field.style.outline = '2px solid red';
+  } else {
+    field.style = '';
+  }
+};
+
+adsForm.addEventListener('invalid', highlightInvalidField, true);
+adsForm.addEventListener('input', highlightInvalidField, true);
