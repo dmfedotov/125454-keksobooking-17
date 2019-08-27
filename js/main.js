@@ -9,6 +9,9 @@ var mapPin = map.querySelector('.map__pin--main');
 var mapHeight = map.clientHeight;
 var filtersForm = map.querySelector('.map__filters');
 var adsForm = document.querySelector('.ad-form');
+var typeOfHouse = adsForm.querySelector('#type');
+var timeIn = adsForm.querySelector('#timein');
+var timeOut = adsForm.querySelector('#timeout');
 
 var getRandomNum = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -41,11 +44,9 @@ var generateMock = function (quantity) {
   return mock;
 };
 
-var mock = generateMock(ADS_QUANTITY);
-
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var renderPin = function (pin) {
+var createPin = function (pin) {
   var pinElem = pinTemplate.cloneNode(true);
 
   pinElem.style.left = pin.location.x - pinElem.clientWidth + 'px';
@@ -56,10 +57,16 @@ var renderPin = function (pin) {
   return pinElem;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < mock.length; i++) {
-  fragment.appendChild(renderPin(mock[i]));
-}
+var mock = generateMock(ADS_QUANTITY);
+
+var render = function name(data) {
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < data.length; i++) {
+    fragment.appendChild(createPin(data[i]));
+  }
+  map.appendChild(fragment);
+};
 
 var changeFormState = function (form, state) {
   var formElems = form.children;
@@ -94,5 +101,44 @@ fillAddressField(mapPin);
 mapPin.addEventListener('mouseup', function () {
   changePageState();
   fillAddressField(mapPin);
-  map.appendChild(fragment);
+  render(mock);
+});
+
+var onTypeOfHouseClick = function () {
+  var price = adsForm.querySelector('#price');
+  var priceValue = '';
+
+  switch (typeOfHouse.value) {
+    case 'bungalo':
+      priceValue = '0';
+      break;
+    case 'flat':
+      priceValue = '1000';
+      break;
+    case 'house':
+      priceValue = '5000';
+      break;
+    case 'palace':
+      priceValue = '10000';
+      break;
+  }
+
+  price.setAttribute('min', priceValue);
+  price.placeholder = priceValue;
+};
+
+onTypeOfHouseClick();
+typeOfHouse.addEventListener('change', onTypeOfHouseClick);
+
+var onTimeClick = function (evt, field) {
+  var target = evt.target;
+  field.value = target.value;
+};
+
+timeIn.addEventListener('change', function (evt) {
+  onTimeClick(evt, timeOut);
+});
+
+timeOut.addEventListener('change', function (evt) {
+  onTimeClick(evt, timeIn);
 });
