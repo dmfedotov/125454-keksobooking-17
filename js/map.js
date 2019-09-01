@@ -21,7 +21,7 @@ window.util.mapPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   window.changePageState();
   isPageActive = window.changePageState();
-  window.load(onLoad);
+  window.backend.donwload(onLoad, window.error.show);
 
   var startCoords = {
     x: evt.clientX,
