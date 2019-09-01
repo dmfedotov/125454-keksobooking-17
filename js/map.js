@@ -1,12 +1,14 @@
 'use strict';
 
 var ADS_QUANTITY = 8;
-var map = document.querySelector('.map');
-
+var adsForm = document.querySelector('.ad-form');
+var filtersForm = window.util.map.querySelector('.map__filters');
 var data = window.data.generate(ADS_QUANTITY);
 var isPageActive = false;
 
-window.address.fillField(isPageActive);
+window.fillAddress(adsForm, isPageActive);
+window.changeFormState(filtersForm, false);
+window.changeFormState(adsForm, false);
 
 var setPinPosition = function (valueY, valueX) {
   window.util.mapPin.style.top = valueY + 'px';
@@ -15,8 +17,8 @@ var setPinPosition = function (valueY, valueX) {
 
 window.util.mapPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-  window.pageState.change();
-  isPageActive = window.pageState.change();
+  window.changePageState();
+  isPageActive = window.changePageState();
   window.pins.render(data);
 
   var startCoords = {
@@ -48,17 +50,17 @@ window.util.mapPin.addEventListener('mousedown', function (evt) {
 
     if (movePosition.x + window.util.pin.SHIFT <= 0) {
       movePosition.x = 0 - window.util.pin.SHIFT;
-    } else if (movePosition.x + window.util.pin.SHIFT >= map.clientWidth) {
-      movePosition.x = map.clientWidth - window.util.pin.SHIFT;
+    } else if (movePosition.x + window.util.pin.SHIFT >= window.util.map.clientWidth) {
+      movePosition.x = window.util.map.clientWidth - window.util.pin.SHIFT;
     }
 
-    window.address.fillField(isPageActive);
+    window.fillAddress(adsForm, isPageActive);
     setPinPosition(movePosition.y, movePosition.x);
   };
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-    window.address.fillField(isPageActive);
+    window.fillAddress(adsForm, isPageActive);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
