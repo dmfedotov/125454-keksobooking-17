@@ -1,9 +1,7 @@
 'use strict';
 
-var ADS_QUANTITY = 8;
 var adsForm = document.querySelector('.ad-form');
 var filtersForm = window.util.map.querySelector('.map__filters');
-var data = window.data.generate(ADS_QUANTITY);
 var isPageActive = false;
 
 window.fillAddress(adsForm, isPageActive);
@@ -15,11 +13,15 @@ var setPinPosition = function (valueY, valueX) {
   window.util.mapPin.style.left = valueX + 'px';
 };
 
+var onLoad = function (data) {
+  window.pins.render(data);
+};
+
 window.util.mapPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   window.changePageState();
   isPageActive = window.changePageState();
-  window.pins.render(data);
+  window.load(onLoad);
 
   var startCoords = {
     x: evt.clientX,
