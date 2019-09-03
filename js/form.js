@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var typeOfHouse = window.address.form.querySelector('#type');
-  var timeIn = window.address.form.querySelector('#timein');
-  var timeOut = window.address.form.querySelector('#timeout');
-  var adsPriceField = window.address.form.querySelector('#price');
+  var typeOfHouse = window.address.adsForm.querySelector('#type');
+  var timeIn = window.address.adsForm.querySelector('#timein');
+  var timeOut = window.address.adsForm.querySelector('#timeout');
+  var adsPriceField = window.address.adsForm.querySelector('#price');
 
   var onTypeOfHouseClick = function () {
     var priceValue = '';
@@ -54,6 +54,6 @@
     }
   };
 
-  window.address.form.addEventListener('invalid', highlightInvalidField, true);
-  window.address.form.addEventListener('input', highlightInvalidField, true);
+  window.address.adsForm.addEventListener('invalid', highlightInvalidField, true);
+  window.address.adsForm.addEventListener('input', highlightInvalidField, true);
 })();
