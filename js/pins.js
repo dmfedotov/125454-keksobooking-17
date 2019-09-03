@@ -19,9 +19,9 @@
   var render = function name(data) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(createPin(data[i]));
-    }
+    Array.from(data).forEach(function (elem) {
+      fragment.appendChild(createPin(elem));
+    });
     map.appendChild(fragment);
   };
 
