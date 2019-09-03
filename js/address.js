@@ -1,10 +1,12 @@
 'use strict';
 
 (function () {
-  window.fillAddress = function (form, pageState) {
+  var form = document.querySelector('.ad-form');
+
+  var fillAddress = function (pageState) {
     var addressField = form.querySelector('#address');
-    var coordX = parseInt(window.util.mapPin.style.left, 10);
-    var coordY = Math.round(parseInt(window.util.mapPin.style.top, 10));
+    var coordX = parseInt(window.pins.userPin.style.left, 10);
+    var coordY = parseInt(window.pins.userPin.style.top, 10);
 
     if (pageState) {
       if (coordX <= 0) {
@@ -17,5 +19,10 @@
     }
 
     addressField.value = coordX + ', ' + coordY;
+  };
+
+  window.address = {
+    adsForm: form,
+    fill: fillAddress
   };
 })();
