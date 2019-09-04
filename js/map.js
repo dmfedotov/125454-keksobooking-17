@@ -4,7 +4,7 @@
   var isPageActive = false;
 
   window.address.fill(isPageActive);
-  window.changeFormState(window.page.filtersForm, false);
+  window.changeFormState(window.filters.form, false);
   window.changeFormState(window.address.adsForm, false);
 
   var setPinPosition = function (valueY, valueX) {
@@ -12,15 +12,13 @@
     window.pins.userPin.style.left = valueX + 'px';
   };
 
-  var onLoad = function (data) {
-    window.pins.render(data);
-  };
-
   window.pins.userPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    window.page.changeState();
-    isPageActive = window.page.changeState();
-    window.backend.donwload(onLoad, window.error.show);
+
+    if (!isPageActive) {
+      window.changePageState();
+      isPageActive = true;
+    }
 
     var startCoords = {
       x: evt.clientX,
