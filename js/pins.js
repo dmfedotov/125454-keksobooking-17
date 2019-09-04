@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ADS_QUANTITY = 5;
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pin--main');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -19,9 +20,10 @@
   var render = function name(data) {
     var fragment = document.createDocumentFragment();
 
-    Array.from(data).forEach(function (elem) {
+    for (var i = 0; i < ADS_QUANTITY; i++) {
+      var elem = data[i];
       fragment.appendChild(createPin(elem));
-    });
+    }
     map.appendChild(fragment);
   };
 
