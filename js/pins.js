@@ -27,8 +27,13 @@
     map.appendChild(fragment);
   };
 
+  var onLoad = function (data) {
+    render(data);
+  };
+
   window.pins = {
     render: render,
+    onLoad: onLoad,
     map: map,
     userPin: mapPin
   };
