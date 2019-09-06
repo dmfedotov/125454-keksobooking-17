@@ -17,7 +17,7 @@
     return pinElem;
   };
 
-  var render = function name(data) {
+  var render = function (data) {
     pinsContainer.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
       pinsContainer.removeChild(pin);
     });
@@ -30,14 +30,14 @@
     pinsContainer.appendChild(fragment);
   };
 
-  var onLoad = function (data) {
-    render(data);
-    window.filters.add(data);
-  };
+  // var onLoad = function (data) {
+  //   render(data);
+  //   window.filters.add(data);
+  // };
 
   window.pins = {
     render: render,
-    onLoad: onLoad,
+    // onLoad: onLoad,
     container: pinsContainer,
     userPin: mapPin
   };
