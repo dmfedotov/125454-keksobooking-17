@@ -49,8 +49,8 @@
 
       if (movePosition.x + window.util.pin.SHIFT <= 0) {
         movePosition.x = 0 - window.util.pin.SHIFT;
-      } else if (movePosition.x + window.util.pin.SHIFT >= window.filters.map.clientWidth) {
-        movePosition.x = window.filters.map.clientWidth - window.util.pin.SHIFT;
+      } else if (movePosition.x + window.util.pin.SHIFT >= window.pins.map.clientWidth) {
+        movePosition.x = window.pins.map.clientWidth - window.util.pin.SHIFT;
       }
 
       window.address.fill(window.address.adsForm, isPageActive);
@@ -67,4 +67,17 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  var onPinClick = function (evt) {
+    var target = evt.target;
+
+    if (target.parentNode.classList.contains('map__pin--main') || target.tagName !== 'IMG') {
+      return;
+    }
+    evt.preventDefault();
+
+    window.preview.show(evt);
+  };
+
+  window.pins.container.addEventListener('click', onPinClick);
 })();
