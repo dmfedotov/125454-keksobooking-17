@@ -2,7 +2,8 @@
 
 (function () {
   var ADS_QUANTITY = 5;
-  var pinsContainer = window.filters.map.querySelector('.map__pins');
+  var map = document.querySelector('.map');
+  var pinsContainer = map.querySelector('.map__pins');
   var mapPin = pinsContainer.querySelector('.map__pin--main');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -21,6 +22,7 @@
     pinsContainer.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
       pinsContainer.removeChild(pin);
     });
+    window.adsData = data;
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < data.length && i < ADS_QUANTITY; i++) {
@@ -30,14 +32,9 @@
     pinsContainer.appendChild(fragment);
   };
 
-  // var onLoad = function (data) {
-  //   render(data);
-  //   window.filters.add(data);
-  // };
-
   window.pins = {
+    map: map,
     render: render,
-    // onLoad: onLoad,
     container: pinsContainer,
     userPin: mapPin
   };
