@@ -2,7 +2,7 @@
 
 (function () {
   window.changePageState = function () {
-    window.filters.map.classList.remove('map--faded');
+    window.pins.map.classList.remove('map--faded');
     window.address.adsForm.classList.remove('ad-form--disabled');
 
     window.changeFormState(window.address.adsForm, true);
