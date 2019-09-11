@@ -26,10 +26,29 @@
   };
 
   var createPhoto = function (src) {
-    var photoElem = cardElem.querySelector('.popup__photo').cloneNode(true);
+    var photoElem = cardTemplate.querySelector('.popup__photo').cloneNode(true);
     photoElem.src = src;
 
     return photoElem;
+  };
+
+  var createFeature = function (className) {
+    var featureElem = cardTemplate.querySelector('.popup__feature').cloneNode(true);
+    featureElem.setAttribute('class', 'popup__feature popup__feature--' + className);
+
+    return featureElem;
+  };
+
+  var renderFeatures = function (features) {
+    var featuresFragment = document.createDocumentFragment();
+    var featuresContainer = cardElem.querySelector('.popup__features');
+
+    features.forEach(function (className) {
+      var feature = createFeature(className);
+      featuresFragment.appendChild(feature);
+    });
+    featuresContainer.innerHTML = '';
+    featuresContainer.appendChild(featuresFragment);
   };
 
   var renderPhotos = function (sources) {
@@ -52,29 +71,60 @@
     cardElem.querySelector('.popup__type').textContent = determineType(card);
     cardElem.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' для ' + card.offer.guests + ' гостей';
     cardElem.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
-    cardElem.querySelector('.popup__features').textContent = card.offer.features.join(', ');
+    renderFeatures(card.offer.features);
     cardElem.querySelector('.popup__description').textContent = card.offer.description;
-
     renderPhotos(card.offer.photos);
 
     return cardElem;
   };
 
-  var render = function (data) {
+  var getAdsObject = function (evt) {
+    var target = evt.target;
+    var adsAvatarSrc = target.getAttribute('src');
+
+    for (var i = 0; i < window.adsData.length; i++) {
+      var adsObj = window.adsData[i];
+      if (adsObj.author.avatar === adsAvatarSrc) {
+        break;
+      }
+    }
+    return adsObj;
+  };
+
+  var renderCard = function (pin) {
     var fragment = document.createDocumentFragment();
 
-    var elem = data[0];
-    fragment.appendChild(createCard(elem));
-    window.pins.container.appendChild(fragment);
+    var cardObj = getAdsObject(pin);
+    fragment.appendChild(createCard(cardObj));
+    window.pins.map.appendChild(fragment);
+
+    var closeButton = window.pins.map.querySelector('.popup__close');
+    closeButton.addEventListener('click', deleteCard);
+
+    document.addEventListener('keydown', onEscPress);
+  };
+
+  var deleteCard = function () {
+    var card = window.pins.map.querySelector('.popup');
+    window.pins.map.removeChild(card);
+
+    document.removeEventListener('keydown', onEscPress);
+  };
+
+  var onEscPress = function (evt) {
+    if (window.util.isEscEvent(evt)) {
+      deleteCard();
+    }
   };
 
   var onLoad = function (data) {
     window.pins.render(data);
-    render(data);
     window.filters.add(data);
   };
 
   window.preview = {
-    onLoad: onLoad
+    onLoad: onLoad,
+    show: renderCard,
+    delete: deleteCard
   };
 })();
