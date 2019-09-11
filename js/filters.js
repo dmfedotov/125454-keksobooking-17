@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
-  var form = map.querySelector('.map__filters');
+  var form = window.pins.map.querySelector('.map__filters');
   var housingType = form.querySelector('#housing-type');
 
   var sortByType = function (pins) {
@@ -17,6 +16,10 @@
 
   var addFilters = function (data) {
     var changeFilters = function (evt) {
+      if (window.pins.map.querySelector('.popup')) {
+        window.preview.delete();
+      }
+
       switch (evt.target) {
         case housingType:
           window.pins.render(sortByType(data));
@@ -34,7 +37,6 @@
 
 
   window.filters = {
-    map: map,
     form: form,
     add: addFilters
   };
