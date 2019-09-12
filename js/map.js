@@ -20,6 +20,8 @@
       isPageActive = true;
     }
 
+    window.pins.userPin.style.zIndex = 2;
+
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
