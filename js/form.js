@@ -1,31 +1,20 @@
 'use strict';
 
 (function () {
+  var typeOfHouseToPrice = {
+    'bungalo': '0',
+    'flat': '1000',
+    'house': '5000',
+    'palace': '10000'
+  };
   var typeOfHouse = window.address.adsForm.querySelector('#type');
   var timeIn = window.address.adsForm.querySelector('#timein');
   var timeOut = window.address.adsForm.querySelector('#timeout');
   var adsPriceField = window.address.adsForm.querySelector('#price');
 
   var onTypeOfHouseClick = function () {
-    var priceValue = '';
-
-    switch (typeOfHouse.value) {
-      case 'bungalo':
-        priceValue = '0';
-        break;
-      case 'flat':
-        priceValue = '1000';
-        break;
-      case 'house':
-        priceValue = '5000';
-        break;
-      case 'palace':
-        priceValue = '10000';
-        break;
-    }
-
-    adsPriceField.setAttribute('min', priceValue);
-    adsPriceField.placeholder = priceValue;
+    adsPriceField.setAttribute('min', typeOfHouseToPrice[typeOfHouse.value]);
+    adsPriceField.placeholder = typeOfHouseToPrice[typeOfHouse.value];
   };
 
   onTypeOfHouseClick();
