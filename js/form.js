@@ -8,6 +8,8 @@
     'palace': '10000'
   };
   var typeOfHouse = window.address.adsForm.querySelector('#type');
+  var rooms = window.address.adsForm.querySelector('#room_number');
+  var capacity = window.address.adsForm.querySelector('#capacity');
   var timeIn = window.address.adsForm.querySelector('#timein');
   var timeOut = window.address.adsForm.querySelector('#timeout');
   var adsPriceField = window.address.adsForm.querySelector('#price');
@@ -19,6 +21,41 @@
 
   onTypeOfHouseClick();
   typeOfHouse.addEventListener('change', onTypeOfHouseClick);
+
+  var onCapacityClick = function (evt) {
+    var target = evt.target;
+    var targetValue = parseInt(target.value, 10);
+    var roomsValue = parseInt(rooms.value, 10);
+
+    if (roomsValue === 100 && targetValue !== 0) {
+      target.setCustomValidity('Вам подходит только вариант \'не для гостей\'');
+    } else if (targetValue === 0 && roomsValue !== 100) {
+      target.setCustomValidity('Пожалуйста, укажите количество гостей');
+    } else if (targetValue > roomsValue) {
+      target.setCustomValidity('Количество мест не должно превышать количество комнат :)');
+    } else {
+      target.setCustomValidity('');
+      rooms.setCustomValidity('');
+    }
+  };
+
+  var onRoomsClick = function (evt) {
+    var target = evt.target;
+    var targetValue = parseInt(target.value, 10);
+    var capacityValue = parseInt(capacity.value, 10);
+
+    if (targetValue === 100 && capacityValue !== 0) {
+      target.setCustomValidity('Вам подходит только вариант \'не для гостей\'');
+    } else if (targetValue !== 100 && capacityValue === 0) {
+      target.setCustomValidity('Вам подходит только вариант \'100 комнат\'');
+    } else {
+      target.setCustomValidity('');
+      capacity.setCustomValidity('');
+    }
+  };
+
+  rooms.addEventListener('change', onRoomsClick);
+  capacity.addEventListener('change', onCapacityClick);
 
   var onTimeClick = function (evt, field) {
     var target = evt.target;
