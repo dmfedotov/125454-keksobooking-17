@@ -5,7 +5,11 @@
     MIN: 130,
     MAX: 630,
     HEIGHT: 81,
-    SHIFT: 65 / 2
+    SHIFT: 65 / 2,
+    position: {
+      X: 570,
+      Y: 375
+    }
   };
 
   var KeyCode = {
