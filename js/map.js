@@ -12,11 +12,17 @@
     window.pins.userPin.style.left = valueX + 'px';
   };
 
+  var setDefaultPinPosition = function () {
+    isPageActive = false;
+    window.pins.userPin.style.left = window.util.pin.position.X + 'px';
+    window.pins.userPin.style.top = window.util.pin.position.Y + 'px';
+  };
+
   window.pins.userPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     if (!isPageActive) {
-      window.changePageState();
+      window.changePageState(true);
       isPageActive = true;
     }
 
@@ -82,4 +88,8 @@
   };
 
   window.pins.container.addEventListener('click', onPinClick);
+
+  window.map = {
+    setDefaultPinPosition: setDefaultPinPosition
+  };
 })();
