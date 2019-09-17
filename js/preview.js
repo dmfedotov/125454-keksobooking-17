@@ -106,7 +106,9 @@
 
   var deleteCard = function () {
     var card = window.pins.map.querySelector('.popup');
-    window.pins.map.removeChild(card);
+    if (card) {
+      window.pins.map.removeChild(card);
+    }
 
     document.removeEventListener('keydown', onEscPress);
   };
