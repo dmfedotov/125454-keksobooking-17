@@ -7,6 +7,7 @@
     'house': '5000',
     'palace': '10000'
   };
+  var mainElement = document.querySelector('main');
   var typeOfHouse = window.address.adsForm.querySelector('#type');
   var rooms = window.address.adsForm.querySelector('#room_number');
   var capacity = window.address.adsForm.querySelector('#capacity');
@@ -80,6 +81,47 @@
     }
   };
 
+  var resetForm = function () {
+    window.address.adsForm.reset();
+  };
+
+  var renderSuccess = function () {
+    var template = document.querySelector('#success').content.querySelector('.success');
+    var successElem = template.cloneNode(true);
+    mainElement.appendChild(successElem);
+  };
+
+  var closeSuccess = function () {
+    var successElem = mainElement.querySelector('.success');
+    mainElement.removeChild(successElem);
+
+    document.removeEventListener('keydown', onEscPress);
+    document.removeEventListener('click', closeSuccess);
+  };
+
+  var onEscPress = function (evt) {
+    if (window.util.isEscEvent(evt)) {
+      closeSuccess();
+    }
+  };
+
+  var onSuccess = function () {
+    resetForm();
+    window.changePageState(false);
+    window.map.setDefaultPinPosition();
+    window.pins.delete();
+    window.preview.delete();
+    window.address.setDefault();
+    renderSuccess();
+
+    document.addEventListener('keydown', onEscPress);
+    document.querySelector('.success').addEventListener('click', closeSuccess);
+  };
+
   window.address.adsForm.addEventListener('invalid', highlightInvalidField, true);
   window.address.adsForm.addEventListener('input', highlightInvalidField, true);
+  window.address.adsForm.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(window.address.adsForm), onSuccess, window.error.show);
+    evt.preventDefault();
+  });
 })();
