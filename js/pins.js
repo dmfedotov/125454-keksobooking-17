@@ -18,10 +18,14 @@
     return pinElem;
   };
 
-  var render = function (data) {
+  var deleteSimilarPins = function () {
     pinsContainer.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
       pinsContainer.removeChild(pin);
     });
+  };
+
+  var render = function (data) {
+    deleteSimilarPins();
     window.adsData = data;
     var fragment = document.createDocumentFragment();
 
@@ -35,6 +39,7 @@
   window.pins = {
     map: map,
     render: render,
+    delete: deleteSimilarPins,
     container: pinsContainer,
     userPin: mapPin
   };
