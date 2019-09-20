@@ -11,11 +11,11 @@
       Y: 375
     }
   };
-
   var KeyCode = {
     ENTER: 13,
     ESC: 27
   };
+  var DEBOUNCE_INTERVAL = 500;
 
   window.util = {
     pin: Pin,
@@ -24,6 +24,19 @@
     },
     getRandomNum: function (min, max) {
       return Math.round(Math.random() * (max - min) + min);
+    },
+    debounce: function (cb) {
+      var lastTimeout = null;
+
+      return function () {
+        var parameters = arguments;
+        if (lastTimeout) {
+          window.clearTimeout(lastTimeout);
+        }
+        lastTimeout = window.setTimeout(function () {
+          cb.apply(null, parameters);
+        }, DEBOUNCE_INTERVAL);
+      };
     }
   };
 })();
