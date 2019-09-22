@@ -18,6 +18,16 @@
     }
   };
 
+  var deleteUploadedPhotos = function () {
+    if (photoContainer.querySelector('.ad-form__photo img')) {
+      photoContainer.querySelectorAll('.ad-form__photo').forEach(function (preview) {
+        photoContainer.removeChild(preview);
+      });
+      photoContainer.appendChild(createEpmtyPhoto());
+    }
+
+  };
+
   var createEpmtyPhoto = function () {
     var emptyPhoto = document.createElement('div');
     emptyPhoto.classList.add('ad-form__photo');
@@ -90,4 +100,8 @@
     var files = Array.from(photoChooser.files);
     showUploadedPhotos(files);
   });
+
+  window.uploadPhoto = {
+    delete: deleteUploadedPhotos
+  };
 })();
