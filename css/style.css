@@ -542,6 +542,28 @@ fieldset {
   background-color: #dadada;
 }
 
+.ad-form-header__preview--delete {
+  position: relative;
+}
+
+.ad-form-header__preview--delete::before {
+  content: 'Удалить';
+  text-align: center;
+  position: absolute;
+  color: #000;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  font-size: 14px;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.ad-form-header__preview--delete:hover img {
+  opacity: 0.3;
+  transition: opacity ease .1s;
+}
+
 .ad-form__field {
   display: -webkit-box;
   display: -ms-flexbox;
