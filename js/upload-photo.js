@@ -18,6 +18,38 @@
     }
   };
 
+  var createEpmtyPhoto = function () {
+    var emptyPhoto = document.createElement('div');
+    emptyPhoto.classList.add('ad-form__photo');
+
+    return emptyPhoto;
+  };
+
+  var onPhotoClick = function (evt) {
+    var photo = evt.currentTarget;
+    photoContainer.removeChild(photo);
+    photoChooser.value = '';
+
+    if (photoContainer.querySelectorAll('.ad-form__photo').length === 0) {
+      photoContainer.appendChild(createEpmtyPhoto());
+    }
+  };
+
+  var onMouseEnter = function (evt) {
+    var target = evt.target;
+    target.classList.add('ad-form__photo--delete');
+
+    target.addEventListener('click', onPhotoClick);
+  };
+
+  var onMouseLeave = function (evt) {
+    var target = evt.target;
+    target.classList.remove('ad-form__photo--delete');
+
+    photoWrap.removeEventListener('mouseenter', onMouseEnter);
+    photoWrap.removeEventListener('mouseover', onMouseLeave);
+  };
+
   var createPhoto = function (src) {
     var wrapper = photoWrap.cloneNode();
     var image = new Image(PhotoSize.WIDTH, PhotoSize.HEIGHT);
@@ -25,7 +57,10 @@
     image.alt = 'Фотография жилья';
     image.style.borderRadius = '5px';
 
+
     wrapper.appendChild(image);
+    wrapper.addEventListener('mouseenter', onMouseEnter);
+    wrapper.addEventListener('mouseleave', onMouseLeave);
 
     return wrapper;
   };
