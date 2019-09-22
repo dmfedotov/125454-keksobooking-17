@@ -8,7 +8,7 @@
 
       window.changeFormState(window.address.adsForm, true);
       window.changeFormState(window.filters.form, true);
-      window.backend.donwload(window.preview.onLoad, window.error.show);
+      window.backend.donwload(window.pins.onLoad, window.error.show);
     } else {
       window.pins.map.classList.add('map--faded');
       window.address.adsForm.classList.add('ad-form--disabled');

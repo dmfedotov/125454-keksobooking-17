@@ -77,18 +77,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var onPinClick = function (evt) {
-    var target = evt.target;
-
-    if (target.parentNode.classList.contains('map__pin--main') || target.tagName !== 'IMG') {
-      return;
-    }
-    evt.preventDefault();
-
-    window.preview.show(evt);
-  };
-
-  window.pins.container.addEventListener('click', onPinClick);
   window.pins.container.addEventListener('focusin', function (evt) {
     var target = evt.target;
     evt.preventDefault();

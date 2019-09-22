@@ -81,6 +81,9 @@
   var getAdsObject = function (evt) {
     var target = evt.target;
     var adsAvatarSrc = target.getAttribute('src');
+    if (target.tagName === 'BUTTON') {
+      adsAvatarSrc = target.firstChild.getAttribute('src');
+    }
 
     for (var i = 0; i < window.adsData.length; i++) {
       var adsObj = window.adsData[i];
@@ -119,13 +122,7 @@
     }
   };
 
-  var onLoad = function (data) {
-    window.pins.render(data);
-    window.filters.add(data);
-  };
-
   window.preview = {
-    onLoad: onLoad,
     show: renderCard,
     delete: deleteCard
   };

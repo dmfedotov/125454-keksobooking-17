@@ -24,6 +24,11 @@
     });
   };
 
+  var onPinClick = function (evt) {
+    evt.preventDefault();
+    window.preview.show(evt);
+  };
+
   var render = function (data) {
     deleteSimilarPins();
     window.adsData = data;
@@ -34,9 +39,20 @@
       fragment.appendChild(createPin(elem));
     }
     pinsContainer.appendChild(fragment);
+
+    var renderedPins = pinsContainer.querySelectorAll('.map__pin:not(.map__pin--main)');
+    renderedPins.forEach(function (pin) {
+      pin.addEventListener('click', onPinClick);
+    });
+  };
+
+  var onLoad = function (data) {
+    render(data);
+    window.filters.add(data);
   };
 
   window.pins = {
+    onLoad: onLoad,
     map: map,
     render: render,
     delete: deleteSimilarPins,
