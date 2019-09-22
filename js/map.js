@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ACTIVE_CLASS = 'map__pin--active';
   var isPageActive = false;
 
   window.address.fill(isPageActive);
@@ -88,6 +89,15 @@
   };
 
   window.pins.container.addEventListener('click', onPinClick);
+  window.pins.container.addEventListener('focusin', function (evt) {
+    var target = evt.target;
+    evt.preventDefault();
+    target.classList.add(ACTIVE_CLASS);
+  }, true);
+  window.pins.container.addEventListener('focusout', function (evt) {
+    var target = evt.target;
+    target.classList.remove(ACTIVE_CLASS);
+  }, true);
 
   window.map = {
     setDefaultPinPosition: setDefaultPinPosition
