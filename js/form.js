@@ -108,6 +108,7 @@
   var onSuccess = function () {
     resetForm();
     window.uploadPhoto.delete();
+    window.uploadAvatar.delete();
     window.changePageState(false);
     window.map.setDefaultPinPosition();
     window.pins.delete();

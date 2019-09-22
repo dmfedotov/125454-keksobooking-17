@@ -25,7 +25,6 @@
       });
       photoContainer.appendChild(createEpmtyPhoto());
     }
-
   };
 
   var createEpmtyPhoto = function () {
